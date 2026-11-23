@@ -9,7 +9,7 @@ Node.js API for the Klinik UNESA frontend. It uses the existing Supabase project
 3. Install packages with `npm install`.
 4. Run `npm run dev`.
 
-The API listens on `http://localhost:3001` by default. Configure `PORT` to change the port and `FRONTEND_ORIGIN` to allow one or more comma-separated frontend origins. `GET /health` checks that the process is responding. All `/api` endpoints require a valid Supabase access token. Petugas-only operations also verify the caller's `user_roles` record.
+The API listens on `http://localhost:3001` by default. Configure `PORT` to change the port and `FRONTEND_ORIGINS` to allow one or more comma-separated frontend origins (for example, `https://klinik.example.com,https://www.klinik.example.com`). Origins must include the scheme (`https://`) and must not include a path. `GET /health` checks that the process is responding. All `/api` endpoints require a valid Supabase access token. Petugas-only operations also verify the caller's `user_roles` record.
 
 The API uses the caller's token for database access and does not use a service-role key. Existing Supabase row-level security policies and RPC functions remain responsible for data-level authorization.
 
@@ -20,7 +20,7 @@ The API uses the caller's token for database access and does not use a service-r
 3. In the Vercel project settings, add these environment variables for the environments you will deploy:
    - `SUPABASE_URL`: the Project URL from Supabase.
    - `SUPABASE_PUBLISHABLE_KEY`: the Supabase publishable key. Do not use a service-role key.
-   - `FRONTEND_ORIGIN`: the frontend's exact deployed origin, such as `https://your-frontend.vercel.app`. Multiple origins can be comma-separated.
+   - `FRONTEND_ORIGINS`: the frontend's exact deployed origin, such as `https://klinik.example.com`. Multiple origins can be comma-separated.
 4. Deploy the project. Vercel serves the Express app through `api/index.ts`; `vercel.json` routes requests to it.
 5. Verify the deployment at `https://<your-project>.vercel.app/api/health` and configure the frontend API base URL as `https://<your-project>.vercel.app/api`.
 
